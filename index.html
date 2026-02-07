@@ -4,7 +4,6 @@
 <meta charset="UTF-8" />
 <title>DocOnDuty | Dr. Shivam Shukla - Physiotherapist</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
@@ -47,7 +46,6 @@ header::after {
 .hero-title { font-size: clamp(28px,5vw,42px); font-weight:700; }
 .hero-sub { font-size:20px; margin-top:6px; }
 .hero-text { max-width:900px; margin:18px auto 0; }
-
 .typing {
   display:inline-block;
   border-right:.15em solid white;
@@ -55,7 +53,6 @@ header::after {
   overflow:hidden;
   animation:typing 4s steps(60,end), blink .75s step-end infinite;
 }
-
 button {
   margin-top:30px;
   background:linear-gradient(135deg,#bbf7d0,#e0f2fe);
@@ -87,18 +84,38 @@ h2 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
   gap: 28px;
+  align-items: start;
 }
 .card {
   background: linear-gradient(135deg,#fff,#e0f2fe);
   border-radius: 22px;
   padding: 28px;
   box-shadow: 0 12px 30px rgba(0,0,0,0.08);
-  text-align: center;
   transition: .35s;
+  overflow: hidden;
 }
 .card:hover {
   background: linear-gradient(135deg,#e0f2fe,#dcfce7);
-  transform: translateY(-10px);
+  transform: translateY(-8px);
+}
+
+/* ===== SERVICES EXPAND ===== */
+.card-details {
+  max-height: 0;
+  opacity: 0;
+  transition: max-height .35s ease, opacity .25s ease;
+}
+.card:hover .card-details {
+  max-height: 900px;
+  opacity: 1;
+}
+.card-details ul {
+  padding-left: 18px;
+  margin-top: 14px;
+}
+.card-details li {
+  margin-bottom: 8px;
+  font-size: 14.5px;
 }
 
 /* ================= PRICING ================= */
@@ -116,20 +133,19 @@ h2 {
   font-weight:600;
 }
 
-/* ================= TESTIMONIALS (FIXED UX) ================= */
+/* ================= TESTIMONIALS ================= */
 .testimonial-wrapper {
   overflow: hidden;
-  padding-bottom: 40px;
 }
 .testimonial-track {
   display: flex;
   gap: 26px;
   width: max-content;
-  animation: scrollTestimonials 22s linear infinite;
+  animation: scrollTestimonials 26s linear infinite;
 }
 .testimonial-card {
   width: 300px;
-  height: 300px;
+  min-height: 260px;
   background: linear-gradient(135deg,#ffffff,#eef9ff);
   border-radius: 26px;
   padding: 28px;
@@ -137,29 +153,9 @@ h2 {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  margin-bottom:30;
 }
-.rating {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.stars {
-  color: #facc15;
-  font-size: 18px;
-}
-.rating-text {
-  font-size: 14px;
-  font-weight: 600;
-  color: #475569;
-}
-.review-text {
-  font-size: 15.5px;
-  line-height: 1.7;
-}
-.author {
-  font-weight: 600;
-  color: #0369a1;
-}
+.stars { color:#facc15; }
 
 /* ================= CONTACT ================= */
 .contact-grid {
@@ -173,7 +169,11 @@ h2 {
   padding: 26px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.08);
 }
-.contact-box strong { color:#0369a1; }
+.contact-box a {
+  color:#0369a1;
+  font-weight:600;
+  text-decoration:none;
+}
 
 /* ================= FOOTER ================= */
 footer {
@@ -188,7 +188,28 @@ footer {
   font-weight: 600;
   text-decoration: none;
 }
-.footer-links a:hover { text-decoration: underline; }
+
+/* ================= STICKY WHATSAPP (FIXED PROPERLY) ================= */
+.whatsapp-float {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  width: 64px;
+  height: 64px;
+  background: #25D366;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+  z-index: 10000;
+  text-decoration: none;
+}
+.whatsapp-float:hover {
+  transform: scale(1.1);
+}
 
 /* ================= ANIMATIONS ================= */
 @keyframes typing { from{width:0} to{width:100%} }
@@ -196,12 +217,6 @@ footer {
 @keyframes scrollTestimonials {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
-}
-
-/* ================= MOBILE ================= */
-@media(max-width:768px){
-  .typing { animation:none; border:none; white-space:normal; }
-  .testimonial-card { width:260px; height:280px; }
 }
 </style>
 </head>
@@ -215,7 +230,7 @@ footer {
   <p class="hero-text">
     <span class="typing">Expert Physiotherapy Care | On-Duty Recovery & Rehabilitation Specialists</span>
   </p>
-  <a href="https://wa.me/919350190981?text=Hello%20DocOnDuty,%20I%20want%20to%20book%20an%20appointment%20with%20Dr.%20Shivam%20Shukla%20(PT)." target="_blank">
+  <a href="https://wa.me/919350190981" target="_blank">
     <button>💬 Book Appointment on WhatsApp</button>
   </a>
 </header>
@@ -226,18 +241,56 @@ footer {
 <section>
 <h2>Our Services</h2>
 <div class="grid">
-  <div class="card">Orthopedic Rehabilitation</div>
-  <div class="card">Sports Injury Recovery</div>
-  <div class="card">Post-Surgery Physiotherapy</div>
-  <div class="card">Neuro Physiotherapy</div>
-  <div class="card">Home Visit Therapy</div>
-  <div class="card">Cupping Therapy</div>
-  <div class="card">Manual Therapy & Mobilization</div>
-  <div class="card">Electrotherapy (IFT, TENS, Ultrasound)</div>
-  <div class="card">Spine & Posture Correction</div>
-  <div class="card">Pediatric Physiotherapy</div>
-  <div class="card">Geriatric Balance Training</div>
-  <div class="card">Women’s Health Physiotherapy</div>
+
+<div class="card"><h3>Orthopedic Rehabilitation</h3><div class="card-details"><ul>
+<li>Fractures</li>
+<li>Ligament injuries (ACL, PCL, MCL, LCL)</li>
+<li>Muscle strains and tears</li>
+<li>Tendon injuries</li>
+<li>Joint problems</li>
+<li>Spinal conditions</li>
+<li>Post-surgical cases</li>
+</ul></div></div>
+
+<div class="card"><h3>Sports Injury</h3><div class="card-details"><ul>
+<li>Ligament sprains</li>
+<li>Muscle strains</li>
+<li>Tendon injuries</li>
+<li>Shoulder injuries</li>
+<li>Tennis / Golfer’s elbow</li>
+<li>Meniscus injuries</li>
+</ul></div></div>
+
+<div class="card"><h3>Neuro Physiotherapy</h3><div class="card-details"><ul>
+<li>Stroke</li>
+<li>Cerebral palsy</li>
+<li>Parkinson’s disease</li>
+<li>Multiple sclerosis</li>
+<li>Spinal cord injury</li>
+<li>Bell’s palsy</li>
+</ul></div></div>
+
+<div class="card"><h3>Cupping Therapy</h3><div class="card-details"><ul>
+<li>Dry cupping</li>
+<li>Wet cupping</li>
+<li>Moving cupping</li>
+</ul></div></div>
+
+<div class="card"><h3>Pediatric Physiotherapy</h3><div class="card-details"><ul>
+<li>Developmental delay</li>
+<li>Cerebral palsy</li>
+<li>Down syndrome</li>
+<li>Autism</li>
+<li>Congenital deformities</li>
+</ul></div></div>
+
+<div class="card"><h3>Women’s Health Physiotherapy</h3><div class="card-details"><ul>
+<li>Pregnancy pain</li>
+<li>Postpartum recovery</li>
+<li>Urinary incontinence</li>
+<li>Pelvic floor rehab</li>
+</ul></div></div>
+
 </div>
 </section>
 
@@ -245,11 +298,11 @@ footer {
 <section>
 <h2>Pricing</h2>
 <div class="grid">
-  <div class="card"><h3>Consultation</h3><div class="old-price">₹500</div><div class="free">FREE</div></div>
-  <div class="card"><h3>Single Session</h3><div class="price">₹600</div><div class="badge">First 2 Visits 50% OFF</div></div>
-  <div class="card"><h3>1 Week Package</h3><div class="price">₹3500</div><div class="badge">Save ₹700</div></div>
-  <div class="card"><h3>2 Week Package</h3><div class="price">₹6300</div><div class="badge">Save ₹2100</div></div>
-  <div class="card"><h3>3 Week Package</h3><div class="price">₹7500</div><div class="badge">⭐ Best Value</div></div>
+<div class="card"><h3>Consultation</h3><div class="old-price">₹500</div><div class="free">FREE</div></div>
+<div class="card"><h3>Single Session</h3><div class="price">₹600</div></div>
+<div class="card"><h3>1 Week Package</h3><div class="price">₹3500</div></div>
+<div class="card"><h3>2 Week Package</h3><div class="price">₹6300</div></div>
+<div class="card"><h3>3 Week Package</h3><div class="price">₹7500</div></div>
 </div>
 </section>
 
@@ -259,35 +312,18 @@ footer {
 <div class="testimonial-wrapper">
 <div class="testimonial-track">
 
-  <div class="testimonial-card">
-    <div class="rating"><div class="stars">★★★★☆</div><div class="rating-text">4.5 / 5</div></div>
-    <div class="review-text">Constant pain and limited movement improved from the very first day.</div>
-    <div class="author">– Satyam</div>
-  </div>
+<div class="testimonial-card"><div class="stars">★★★★☆</div><p>Constant pain improved from day one.</p><strong>– Satyam</strong></div>
+<div class="testimonial-card"><div class="stars">★★★★★</div><p>Amazing experience.</p><strong>– Paras</strong></div>
+<div class="testimonial-card"><div class="stars">★★★★★</div><p>Very professional care.</p><strong>– Shivangi</strong></div>
+<div class="testimonial-card"><div class="stars">★★★★☆</div><p>Mobility improved a lot.</p><strong>– Sujal</strong></div>
+<div class="testimonial-card"><div class="stars">★★★★★</div><p>Very satisfied.</p><strong>– Priyansh</strong></div>
 
-  <div class="testimonial-card">
-    <div class="rating"><div class="stars">★★★★★</div><div class="rating-text">5.0 / 5</div></div>
-    <div class="review-text">Amazing experience! The pain disturbing my routine is almost gone.</div>
-    <div class="author">– Paras</div>
-  </div>
-
-  <div class="testimonial-card">
-    <div class="rating"><div class="stars">★★★★★</div><div class="rating-text">5.0 / 5</div></div>
-    <div class="review-text">Remarkable relief after a few sessions. Very professional care.</div>
-    <div class="author">– Shivangi</div>
-  </div>
-
-  <div class="testimonial-card">
-    <div class="rating"><div class="stars">★★★★☆</div><div class="rating-text">4.5 / 5</div></div>
-    <div class="review-text">Didn’t expect such quick relief. Mobility improved a lot.</div>
-    <div class="author">– Sujal</div>
-  </div>
-
-  <div class="testimonial-card">
-    <div class="rating"><div class="stars">★★★★★</div><div class="rating-text">5.0 / 5</div></div>
-    <div class="review-text">Very satisfied with the results. Exercises helped greatly.</div>
-    <div class="author">– Priyansh</div>
-  </div>
+<!-- duplicate for smooth loop -->
+<div class="testimonial-card"><div class="stars">★★★★☆</div><p>Constant pain improved from day one.</p><strong>– Satyam</strong></div>
+<div class="testimonial-card"><div class="stars">★★★★★</div><p>Amazing experience.</p><strong>– Paras</strong></div>
+<div class="testimonial-card"><div class="stars">★★★★★</div><p>Very professional care.</p><strong>– Shivangi</strong></div>
+<div class="testimonial-card"><div class="stars">★★★★☆</div><p>Mobility improved a lot.</p><strong>– Sujal</strong></div>
+<div class="testimonial-card"><div class="stars">★★★★★</div><p>Very satisfied.</p><strong>– Priyansh</strong></div>
 
 </div>
 </div>
@@ -297,10 +333,10 @@ footer {
 <section>
 <h2>Contact</h2>
 <div class="contact-grid">
-  <div class="contact-box"><strong>📍 Address</strong><br>Dwarka, New Delhi</div>
-  <div class="contact-box"><strong>📞 Phone</strong><br>+91 9350190981</div>
-  <div class="contact-box"><strong>✉️ Email</strong><br>shukla.shivam1977@gmail.com</div>
-  <div class="contact-box"><strong>⏰ Timings</strong><br>Mon–Sat, 9 AM – 7 PM</div>
+<div class="contact-box"><strong>📍 Address</strong><br>Dwarka, New Delhi</div>
+<div class="contact-box"><strong>📞 Phone</strong><br><a href="tel:+919350190981">+91 9350190981</a></div>
+<div class="contact-box"><strong>✉️ Email</strong><br><a href="mailto:shukla.shivam1977@gmail.com">shukla.shivam1977@gmail.com</a></div>
+<div class="contact-box"><strong>⏰ Timings</strong><br>Mon–Sat, 9 AM – 7 PM</div>
 </div>
 </section>
 
@@ -314,6 +350,12 @@ footer {
   </div>
   <p style="margin-top:20px;">© 2026 DocOnDuty Physiotherapy Clinic. All Rights Reserved.</p>
 </footer>
+
+<!-- STICKY WHATSAPP -->
+<a class="whatsapp-float"
+   href="https://wa.me/919350190981"
+   target="_blank"
+   aria-label="Chat on WhatsApp">💬</a>
 
 </body>
 </html>
